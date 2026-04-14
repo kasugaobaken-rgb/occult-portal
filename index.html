@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>境界記録ポータル | オカルト・都市伝説・怪異の総合サイト</title>
+<style>
+:root {
+  --bg: #2a2464; --bg2: #1f6a8a; --bg3: #3a1c63;
+  --paper: #fff8e8; --paper2: #fffdf6;
+  --ink: #1c1b24; --muted: #57525f;
+  --yellow: #ffd83b; --red: #ff4f5e;
+  --cyan: #49d7ff; --pink: #ff72c7; --green: #78e26b;
+  --shadow: 0 16px 40px rgba(0,0,0,0.22);
+  --max: 1240px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--ink);
+  font-family:"BIZ UDPGothic","Hiragino Sans","Noto Sans JP",sans-serif;
+  line-height:1.75;
+  background:
+    radial-gradient(circle at 12% 12%,rgba(255,216,59,.18),transparent 18%),
+    radial-gradient(circle at 88% 14%,rgba(73,215,255,.16),transparent 18%),
+    radial-gradient(circle at 20% 80%,rgba(255,79,94,.15),transparent 16%),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg2) 52%,var(--bg3) 100%);
+  background-attachment:fixed;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%,#fff,transparent 60%),
+    radial-gradient(2px 2px at 25% 70%,#fff,transparent 60%),
+    radial-gradient(1px 1px at 55% 18%,#fff,transparent 60%),
+    radial-gradient(2px 2px at 70% 60%,#fff,transparent 60%),
+    radial-gradient(1px 1px at 86% 28%,#fff,transparent 60%);
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+
+.container{width:min(calc(100% - 32px),var(--max));margin:0 auto;}
+
+/* ── ヘッダー ── */
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:rgba(37,28,94,.84);
+  backdrop-filter:blur(12px);
+  border-bottom:3px solid rgba(255,255,255,.12);
+}
+.topbar-inner{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;padding:14px 0;color:#fff;
+}
+.brand{font-weight:900;letter-spacing:.06em;font-size:1.05rem;text-shadow:0 2px 0 rgba(0,0,0,.22);}
+.brand small{display:block;font-size:.78rem;font-weight:500;opacity:.86;letter-spacing:.04em;margin-top:2px;}
+nav ul{display:flex;flex-wrap:wrap;gap:18px;list-style:none;margin:0;padding:0;}
+nav a{color:rgba(255,255,255,.92);font-size:.92rem;font-weight:700;}
+nav a:hover{color:var(--yellow);}
+
+/* ── ヒーロー ── */
+.hero{padding:24px 0 20px;}
+.hero-box{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  align-items:start;
+}
+.panel{border-radius:24px;box-shadow:var(--shadow);overflow:hidden;}
+
+.hero-copy{
+  background:linear-gradient(180deg,#fff8de 0%,#fff1ba 100%);
+  border:4px solid #fff;
+  padding:34px;
+  position:relative;
+  border-radius:24px;
+}
+.hero-copy::before{
+  content:"総合オカルト・都市伝説サイト";
+  display:inline-block;background:var(--red);color:#fff;
+  font-weight:900;letter-spacing:.08em;padding:8px 12px;border-radius:999px;
+  box-shadow:0 6px 18px rgba(255,79,94,.25);margin-bottom:16px;font-size:.8rem;
+}
+h1{
+  margin:0;
+  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+  font-size:clamp(2.2rem,4vw,4rem);
+  line-height:1.04;letter-spacing:-.03em;
+  color:#221b2e;text-shadow:0 2px 0 rgba(255,255,255,.35);
+}
+.hero-copy p{margin:18px 0 0;color:#40384b;font-size:1rem;max-width:58ch;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 18px;border-radius:999px;font-weight:900;
+  transition:transform .2s ease;
+}
+.btn:hover{transform:translateY(-1px);}
+.btn.primary{background:var(--ink);color:#fff;}
+.btn.secondary{background:#fff;color:var(--ink);border:2px solid rgba(0,0,0,.08);}
+
+/* ヒーロービジュアル：画像を全部見せる */
+.hero-visual{
+  border:4px solid rgba(255,255,255,.9);
+  border-radius:24px;
+  overflow:hidden;
+  background:#0e1221;
+  box-shadow:var(--shadow);
+}
+.hero-visual img{
+  width:100%;
+  height:auto;        /* ← 自然な高さで全部見せる */
+  display:block;
+}
+.hero-visual-caption{
+  background:rgba(255,248,232,.94);
+  padding:16px 20px;
+  border-top:3px solid rgba(255,255,255,.6);
+}
+.hero-visual-caption .badge{
+  display:inline-block;background:var(--yellow);color:#312b00;
+  padding:5px 10px;border-radius:999px;font-size:.76rem;font-weight:900;
+  letter-spacing:.08em;margin-bottom:8px;
+}
+.hero-visual-caption h2{margin:0 0 5px;font-size:1.1rem;}
+.hero-visual-caption p{margin:0;font-size:.9rem;color:#4e4658;}
+
+/* ── 特集シェルフ：横スクロール ── */
+section{padding:14px 0 34px;}
+.section-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:16px;flex-wrap:wrap;margin-bottom:18px;color:#fff;
+}
+.section-head h2{
+  margin:0;font-size:clamp(1.6rem,3vw,2.2rem);
+  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+  text-shadow:0 2px 0 rgba(0,0,0,.18);
+}
+.section-head p{margin:0;max-width:58ch;color:rgba(255,255,255,.9);}
+
+.shelf{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(300px,1fr);
+  gap:16px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  scroll-snap-type:x mandatory;
+}
+.shelf::-webkit-scrollbar{height:6px;}
+.shelf::-webkit-scrollbar-thumb{background:rgba(255,255,255,.28);border-radius:999px;}
+
+/* ポスターカード：画像を上に全表示、テキストを下に */
+.poster-card{
+  border-radius:22px;
+  overflow:hidden;
+  scroll-snap-align:start;
+  border:4px solid rgba(255,255,255,.88);
+  box-shadow:var(--shadow);
+  background:#fff8e8;
+  display:flex;
+  flex-direction:column;    /* ← 縦並び */
+}
+.poster-card .img-wrap{
+  overflow:hidden;
+  background:#151322;
+  flex-shrink:0;
+}
+.poster-card .img-wrap img{
+  width:100%;
+  height:auto;              /* ← 画像を全部見せる */
+  display:block;
+  transition:transform .4s ease;
+}
+.poster-card:hover .img-wrap img{transform:scale(1.03);}
+.poster-content{
+  padding:16px 18px 18px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.poster-label{
+  display:inline-block;
+  background:var(--cyan);color:#032634;
+  padding:5px 9px;border-radius:999px;
+  font-size:.72rem;font-weight:900;letter-spacing:.08em;
+  align-self:flex-start;
+}
+.poster-content h3{margin:0;font-size:1.05rem;}
+.poster-content p{margin:0;color:#4f4958;font-size:.9rem;line-height:1.65;}
+
+/* ── ジャンルグリッド ── */
+.grid-4,.grid-3,.split{display:grid;gap:16px;}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.split{grid-template-columns:1.05fr .95fr;}
+
+.card{
+  background:var(--paper);border-radius:20px;
+  padding:22px;box-shadow:var(--shadow);
+  border:3px solid rgba(255,255,255,.9);
+}
+.card .tag{
+  display:inline-block;margin-bottom:10px;
+  font-size:.76rem;font-weight:900;letter-spacing:.08em;
+  padding:6px 10px;border-radius:999px;
+  background:var(--pink);color:#fff;
+}
+.card h3{margin:0 0 8px;font-size:1.08rem;}
+.card p{margin:0;color:#4f4958;font-size:.93rem;}
+
+/* ── トピックリスト ── */
+.topic-list{display:grid;gap:12px;}
+.topic-item{
+  display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:start;
+  background:var(--paper2);border-radius:18px;padding:18px;
+  box-shadow:var(--shadow);border:3px solid rgba(255,255,255,.9);
+}
+.topic-key{color:#5947b1;font-size:.82rem;font-weight:900;letter-spacing:.08em;}
+.topic-item h3{margin:0 0 5px;font-size:1rem;}
+.topic-item p{margin:0;color:#4f4958;font-size:.92rem;}
+
+.quote{
+  padding:24px;
+  background:linear-gradient(180deg,#fffdf6 0%,#fff5cb 100%);
+  border:3px solid rgba(255,255,255,.9);border-left:8px solid var(--yellow);
+  border-radius:20px;box-shadow:var(--shadow);
+  font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+  font-size:1.05rem;color:#2c2735;line-height:1.8;
+}
+.link-list{display:grid;gap:12px;}
+.link-item{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:14px;padding:16px 18px;
+  background:var(--paper2);border-radius:16px;
+  box-shadow:var(--shadow);border:3px solid rgba(255,255,255,.9);
+  color:#4f4958;font-weight:700;transition:transform .2s;
+}
+.link-item:hover{color:#221b2e;transform:translateY(-1px);}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+.chip{
+  padding:8px 12px;border-radius:999px;font-size:.84rem;font-weight:800;
+  background:#fff;color:#443e4f;border:2px solid rgba(0,0,0,.08);
+}
+footer{margin-top:6px;padding:20px 0 34px;color:#fff;}
+.footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;opacity:.92;}
+
+/* ── レスポンシブ ── */
+@media(max-width:980px){
+  .hero-box{grid-template-columns:1fr;}
+  .grid-4{grid-template-columns:1fr 1fr;}
+  .grid-3{grid-template-columns:1fr 1fr;}
+  .split{grid-template-columns:1fr;}
+  .shelf{grid-auto-columns:minmax(260px,80%);}
+}
+@media(max-width:720px){
+  .topbar-inner{flex-direction:column;align-items:flex-start;}
+  nav ul{gap:12px 16px;}
+  .grid-4,.grid-3,.split{grid-template-columns:1fr;}
+  .topic-item{grid-template-columns:1fr;gap:8px;}
+  .hero-copy{padding:24px 20px;}
+  .shelf{grid-auto-columns:88%;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">境界記録ポータル<small>Occult / Urban Legend / Mystery Magazine Portal</small></div>
+    <nav aria-label="主要メニュー">
+      <ul>
+        <li><a href="#featured">特集</a></li>
+        <li><a href="#genres">ジャンル</a></li>
+        <li><a href="#topics">話題</a></li>
+        <li><a href="#guide">入口</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero-box">
+      <div class="panel hero-copy">
+        <h1>UFO、神隠し、<br>学校の怪談。<br>怪しい話を、<br>面白く読む。</h1>
+        <p>オカルト、都市伝説、神隠し、異界、UFO、心霊——暗く重い資料庫ではなく、<strong>ワクワクしながら読み漁れる総合ポータル</strong>としてまとめた架空の特集サイトです。</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#featured">人気特集を見る</a>
+          <a class="btn secondary" href="#genres">ジャンル一覧へ</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="kamikakushi-feature.jpg" alt="神隠し・異界の謎">
+        <div class="hero-visual-caption">
+          <div class="badge">今月の巻頭特集</div>
+          <h2>消えた者たちの記録</h2>
+          <p>神隠し、存在改変、帰ってきても元に戻らない失踪譚をまとめた看板特集。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="featured">
+    <div class="container">
+      <div class="section-head">
+        <h2>人気特集</h2>
+        <p>まずは押したくなる大特集から。雑誌の表紙をめくる感覚で読める入口にする。</p>
+      </div>
+      <div class="shelf">
+        <article class="poster-card">
+          <div class="img-wrap"><img src="ufo-feature.jpg" alt="UFO・空の怪異"></div>
+          <div class="poster-content">
+            <div class="poster-label" style="background:var(--cyan);color:#032634;">Sky Archive</div>
+            <h3><a href="ufo_sky.html">夜空に現れるもの</a></h3>
+            <p>UFO、発光体、未確認飛行現象。怪談より少し広い目線で楽しめる人気特集。</p>
+          </div>
+        </article>
+        <article class="poster-card">
+          <div class="img-wrap"><img src="kamikakushi-feature.jpg" alt="神隠し・異界の謎"></div>
+          <div class="poster-content">
+            <div class="poster-label" style="background:var(--pink);color:#fff;">Kamikakushi</div>
+            <h3><a href="kamikakushi.html">神隠しと異界の境目</a></h3>
+            <p>森、鳥居、帰れない道。古い伝承と現代怪談が交差する王道テーマ。</p>
+          </div>
+        </article>
+        <article class="poster-card">
+          <div class="img-wrap"><img src="school-feature.jpg" alt="学校の怪談"></div>
+          <div class="poster-content">
+            <div class="poster-label" style="background:var(--yellow);color:#312b00;">School Mystery</div>
+            <h3><a href="school_ghosts.html">学校に残る噂の地図</a></h3>
+            <p>トイレ、階段、音楽室、放送室。学校の怪談を場所別に楽しむ定番企画。</p>
+          </div>
+        </article>
+        <article class="poster-card">
+          <div class="img-wrap"><img src="recordings-feature.jpg" alt="録音異常・心霊写真"></div>
+          <div class="poster-content">
+            <div class="poster-label" style="background:var(--green);color:#10320b;">Media Horror</div>
+            <h3><a href="recordings_spiritphotos.html">録音に残った声</a></h3>
+            <p>録音異常、心霊写真、映像媒体の怪異をまとめたメディア系特集。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="genres">
+    <div class="container">
+      <div class="section-head">
+        <h2>ジャンルから探す</h2>
+        <p>明るくポップでも、入口は整理する。何が読めるサイトかを一目で伝える。</p>
+      </div>
+      <div class="grid-4">
+        <article class="card">
+          <div class="tag">Genre 01</div>
+          <h3><a href="kamikakushi.html">神隠し・異界</a></h3>
+          <p>人が消える、帰れない道、存在が薄れる。民俗と現代怪談が混ざる人気ジャンル。</p>
+        </article>
+        <article class="card">
+          <div class="tag" style="background:var(--cyan);color:#043040;">Genre 02</div>
+          <h3>都市伝説</h3>
+          <p>学校、駅、病院、団地、ネット。現代の生活圏で噂として増殖する怪異。</p>
+        </article>
+        <article class="card">
+          <div class="tag" style="background:var(--yellow);color:#312b00;">Genre 03</div>
+          <h3><a href="ufo_sky.html">UFO・空の怪異</a></h3>
+          <p>無音飛行、発光体、急停止、編隊飛行。ワクワク感も強い人気カテゴリ。</p>
+        </article>
+        <article class="card">
+          <div class="tag" style="background:var(--green);color:#10320b;">Genre 04</div>
+          <h3><a href="recordings_spiritphotos.html">心霊・記録媒体</a></h3>
+          <p>写真、録音、ビデオ、配信。媒体に残る怪異はエンタメ特集との相性が強い。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container split">
+      <div>
+        <div class="section-head"><h2>このサイトのノリ</h2><p>怖がらせるだけじゃなく、怪しい話を"面白く読む"雑誌サイトっぽさを出す。</p></div>
+        <div class="quote">オカルトは、重く暗いだけだと入口が狭い。<br>少しポップに、少し胡散臭く、でも中身はちゃんと不気味。<br>それくらいが一番読みたくなる。</div>
+      </div>
+      <div class="card">
+        <div class="tag" style="background:var(--red);color:#fff;">Magazine Style</div>
+        <h3>デザイン方針</h3>
+        <p>雑誌の特集感、ポップな差し色、明るい紙面風カードで、他の暗い怪異サイトとキャラを分ける。</p>
+        <div class="chips">
+          <span class="chip">ポップな差し色</span>
+          <span class="chip">雑誌っぽい見出し</span>
+          <span class="chip">読みやすい本文</span>
+          <span class="chip">軽い入口</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="topics">
+    <div class="container">
+      <div class="section-head"><h2>いま気になる話題</h2><p>深掘り前提のデータベースではなく、"次に何を読みたくなるか"が見える並びにする。</p></div>
+      <div class="topic-list">
+        <div class="topic-item"><div class="topic-key">TOPIC-01</div><div><h3>神隠し・存在改変</h3><p>人が消えるだけでなく、周囲の記憶や記録からも薄れていく。かなり強いフックになるテーマ。</p></div></div>
+        <div class="topic-item"><div class="topic-key">TOPIC-02</div><div><h3>学校の怪談</h3><p>定番なのに強い。場所別、時間別、噂の型別に整理すると特集が作りやすい。</p></div></div>
+        <div class="topic-item"><div class="topic-key">TOPIC-03</div><div><h3>UFO・発光体</h3><p>恐怖一辺倒ではなく、ロマンや不思議さも混ぜられるため、総合サイトに向いている。</p></div></div>
+        <div class="topic-item"><div class="topic-key">TOPIC-04</div><div><h3>録音異常・心霊写真</h3><p>視覚と音の両方に展開できるので、記事だけでなく演出や企画にもつながりやすい。</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="guide">
+    <div class="container split">
+      <div>
+        <div class="section-head"><h2>おすすめの入口</h2><p>トップからそのまま個別特集へ飛ばせる構造にして、軽く回遊できるポータルにする。</p></div>
+        <div class="link-list">
+          <a class="link-item" href="kamikakushi.html"><span>特集：神隠し伝承まとめ</span><span>→</span></a>
+          <a class="link-item" href="school_ghosts.html"><span>特集：学校に残る噂の地図</span><span>→</span></a>
+          <a class="link-item" href="ufo_sky.html"><span>特集：夜空に現れるもの</span><span>→</span></a>
+          <a class="link-item" href="recordings_spiritphotos.html"><span>特集：録音に残った声</span><span>→</span></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="tag" style="background:#5947b1;color:#fff;">Popular Tags</div>
+        <h3>注目ワード</h3>
+        <div class="chips">
+          <span class="chip">神隠し</span><span class="chip">都市伝説</span>
+          <span class="chip">異界</span><span class="chip">UFO</span>
+          <span class="chip">心霊</span><span class="chip">学校怪談</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>境界記録ポータル / Occult Magazine Portal</div>
+    <div>オカルト・都市伝説をポップに読み漁る総合サイト</div>
+  </div>
+</footer>
+</body>
+</html>
