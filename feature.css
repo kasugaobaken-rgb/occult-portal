@@ -176,3 +176,35 @@ footer{padding:20px 0 34px;color:#fff;}
   .hero-copy{padding:20px 18px 22px;}
   h1{font-size:clamp(1.8rem,7vw,2.8rem);}
 }
+
+/* ARG調査メモ連携 */
+.arg-evidence-box{
+  margin:18px 0 0;
+  padding:16px;
+  border:2px dashed rgba(89,71,177,.38);
+  border-radius:16px;
+  background:rgba(255,255,255,.72);
+}
+.arg-evidence-box .arg-title{font-weight:900;margin-bottom:8px;color:#362d72;}
+.arg-evidence-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:6px;margin:6px 8px 0 0;padding:9px 12px;border-radius:999px;
+  border:2px solid rgba(89,71,177,.28);background:#fff;color:#2d2662;
+  font-weight:900;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+.arg-evidence-btn:hover{transform:translateY(-1px);}
+.arg-evidence-btn.saved{background:#e7ffe0;border-color:#78e26b;color:#1c4b16;}
+.arg-back-link{
+  position:fixed;right:14px;bottom:14px;z-index:50;
+  background:#1c1b24;color:#fff;padding:11px 14px;border-radius:999px;
+  font-weight:900;font-size:.86rem;box-shadow:0 12px 28px rgba(0,0,0,.28);
+}
+.arg-toast{
+  position:fixed;left:50%;bottom:76px;transform:translateX(-50%) translateY(10px);
+  opacity:0;z-index:60;max-width:min(92vw,520px);
+  background:#1c1b24;color:#fff;padding:12px 16px;border-radius:14px;
+  font-weight:800;box-shadow:0 12px 32px rgba(0,0,0,.32);
+  transition:opacity .22s ease, transform .22s ease;
+}
+.arg-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(max-width:720px){.arg-back-link{left:12px;right:12px;text-align:center}.arg-toast{bottom:72px}}
